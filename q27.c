@@ -16,10 +16,10 @@ Date: 6th Sep, 2025.
 int main(int argc,char *env[])
 {
     char *path = "/bin/ls";
-    execl(path, path, "-Rl", NULL);//a
-    char *path2 = "ls";
-    execlp(path2, path2, "-Rl", NULL);//b
-    execle(path, path, "-Rl" ,"27c_example/",NULL, env);//c
+    char *prog = "ls";
+    execl(path, prog, "-Rl", NULL);//a
+    execlp(path, prog, "-Rl", NULL);//b
+    execle(path, prog, "-Rl" ,"27c_example/",NULL, env);//c
     char *argv[] = {path,"-Rl",NULL};
     execv(path, argv);//d
     char *buf[] = {path2, "-Rl", NULL};

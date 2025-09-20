@@ -36,7 +36,7 @@ int main() {
         break;
     case SCHED_OTHER:
         printf("Current policy is OTHER\n");
-        sched_setscheduler(pid, SCHED_RR, &priority);
+        sched_setscheduler(pid, SCHED_FIFO, &priority);
         currentPolicy = sched_getscheduler(pid);
         printf("Current policy is %d\n", currentPolicy);
         break;

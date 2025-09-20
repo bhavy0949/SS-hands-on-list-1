@@ -13,34 +13,30 @@ Date: 7th Sep, 2025.
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <syslog.h>
+#include <time.h>
 
 int main() {
     
-    pid_t process_id;
-    process_id = fork();
+    pid_t process_id = fork();
     if (process_id < 0) {
-        exit(EXIT_FAILURE);
-    }
-    if (process_id> 0) {
-        exit(EXIT_SUCCESS);
+        exit(0);
     }
     umask(0);
-    if (setsid() < 0) {
-        exit(EXIT_FAILURE);
-    }
-    if ((chdir("/")) < 0) {
-        exit(EXIT_FAILURE);
-    }
+    setsid();
+    chdir("/");
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
+    int target_hour = 1;
+    int target_min = 10;
     
-    openlog("daemon-log", LOG_PID, LOG_DAEMON);
     while (1) {
-        syslog(LOG_NOTICE, "Daemon is running...");
-        sleep(5);
+       time_t now =  time(NULL);
+       struct tm *t = localtime(&now);
+       if (t->tm_hour == target_hour && t->tm_min == target_min) {
+          system("/myscript.sh"); // Path to your script
+          sleep(60);
+       }
+       sleep(1);
     }
-    closelog();
-
-    return EXIT_SUCCESS;
 }

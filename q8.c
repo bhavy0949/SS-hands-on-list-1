@@ -30,7 +30,8 @@ int main(int argc, char *argv[]) {
         }
         if (single_char_buffer[0] == '\n') {
             write(1, line_buffer, line_index);
-            line_index = 0; 
+            sleep(1);
+	    line_index = 0; 
         }
     }
     
