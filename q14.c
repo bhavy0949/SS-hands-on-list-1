@@ -21,11 +21,9 @@ int main(int argc, char *argv[])
         printf("Pass the name of the file as the argument");
         return 0;
     }
-    
-    int fd = open(argv[1], O_RDONLY);
     struct stat statbuf;
 
-    fstat(fd, &statbuf);
+    lstat(argv[1], &statbuf);
 
     if (S_ISREG(statbuf.st_mode))
         write(STDOUT_FILENO, "Regular File\n", 13);
